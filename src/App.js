@@ -1,35 +1,35 @@
 import './App.css';
-import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import { RickAndMortyService } from './services/RickAndMortyService';
-import CharacterCard from './components/CharacterCard/CharacterCard';
+import Home from './containers/Home/Home';
+import ListCharacters from './containers/ListCharacters/ListCharacters';
+import CharacterDetail from './containers/CharacterDetail/CharacterDetail';
+import Header from './components/Header/Header';
 
 function App() {
-  const [characters, setCharacters] = useState([ ])
-
-  useEffect(()=>{
-    getAllChars()
-  }, [])
-
-  const getAllChars = async () => {
-    try{
-      let tempCharacters = await RickAndMortyService.getCharacters()
-      setCharacters(tempCharacters.data.results)
-      console.log(characters)
-    } catch(err){
-      console.log(err)
-    }
-    
-  }
+  
 
   return (
     <div className="App">
-      {
-        characters.map(char=> (
-          <CharacterCard key={char.id} data={char}/>
-        ))
-      }
+      <BrowserRouter>
+        {/* Lo que va fuera de Routes se queda fijo */}
+        <Header/>
 
+        {/* Lo que va dentro de Routes responde a la url */}
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/characters' element={<ListCharacters/>}/>
+          {/* :param nos va a servir para mandar parametros (datos) a una url */}
+          <Route path='/character-detail/:id' element={<CharacterDetail/>}/>
+        </Routes>
+
+
+      </BrowserRouter>
+
+
+
+
+      
 
     </div>
   );

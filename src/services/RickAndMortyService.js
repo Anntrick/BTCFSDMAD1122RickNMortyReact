@@ -8,3 +8,10 @@ RickAndMortyService.getCharacters = async () => {
     return await axios.get(apiUrl);
 }
 
+RickAndMortyService.getCharacterById = async (id) => {
+    const apiUrl = `https://rickandmortyapi.com/api/character/${id}`;
+
+    return await axios.get(apiUrl);
+}
+
+
